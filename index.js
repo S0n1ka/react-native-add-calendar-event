@@ -10,13 +10,13 @@ export const presentNewCalendarEventDialog = options => {
   if (Platform.OS === 'android') {
     // it seems unnecessary to check first, but if permission is manually disabled
     // the PermissionsAndroid.request will return granted (a RN bug?)
-    return PermissionsAndroid.check(
+    return PermissionsAndroid.checkPermission(
       PermissionsAndroid.PERMISSIONS.WRITE_CALENDAR
     ).then(hasPermission => {
       if (hasPermission === true) {
         return _presentCalendarEventDialog(options);
       } else {
-        return PermissionsAndroid.request(PermissionsAndroid.PERMISSIONS.WRITE_CALENDAR)
+        return PermissionsAndroid.requestPermission(PermissionsAndroid.PERMISSIONS.WRITE_CALENDAR)
           .then(granted => {
             if (granted === PermissionsAndroid.RESULTS.GRANTED) {
               return _presentCalendarEventDialog(options);
